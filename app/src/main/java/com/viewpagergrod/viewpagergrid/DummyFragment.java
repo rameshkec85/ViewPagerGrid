@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,5 +40,13 @@ public class DummyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         TextView txt_title = (TextView) getView().findViewById(R.id.txt_title);
         txt_title.setText("" + (getArguments().getInt("pageNo") + 1));
+        //
+        RecyclerView rvHomeScreen = (RecyclerView) getView().findViewById(R.id.rvHomeScreen);
+        GridAdapter gridAdapter = new GridAdapter(getActivity());
+        gridAdapter.addItems(getArguments().<DummyData>getParcelableArrayList("data"));
+        rvHomeScreen.setAdapter(gridAdapter);
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
+        rvHomeScreen.setLayoutManager(layoutManager);
+
     }
 }
